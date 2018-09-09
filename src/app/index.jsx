@@ -6,6 +6,11 @@ import ReactDOM from 'react-dom';
 import './main.less';
 import uuid from 'uuid';
 import { BrowserRouter, Route, Link } from 'react-router-dom';
+import { Provider, Connect } from 'react-redux';
+import { createStore, combineReducers } from 'redux';
+
+import { ConnectedGroupContainer } from './components/TaskList';
+
 
 const run = async()=>{
     let {data} = await post('//localhost:7777/board');
@@ -42,32 +47,19 @@ const ProtoAppState = {
     }]
 };
 
-const GroupContainer = ({name,id})=>(
-    <div className="group-container">
-        <h2>
-            {name}
-        </h2>
-        <ul>
-            {ProtoAppState.tasks.filter(task=>task.parent == id).map(task=>(
-                <li key={task.id}>
+const store = createStore(()=>ProtoAppState);
 
-                    {task.name} - ({ProtoAppState.comments.filter(comment=>comment.task === task.id).length})
-                    <Link to={`/details/${task.id}`}>GO</Link>
-                </li>
-            ))}
-        </ul>
-    </div>
-);
+
 
 const Dashboard = ()=>(
     <div>
         {ProtoAppState.groups.map(group=>(
-            <GroupContainer key={group.id} {...group}/>
+            <ConnectedGroupContainer key={group.id} {...group}/>
         ))}
     </div>
 )
 
-const Details = ({match})=>{
+const TaskDetails = ({match})=>{
     let id = match.params.id;
     let task = ProtoAppState.tasks.find(task=>task.id === id);
     return (
@@ -78,9 +70,10 @@ const Details = ({match})=>{
         </div>
     )
 }
-
 ReactDOM.render(
     <BrowserRouter>
+        <Provider store={store}>
+
         <div>
             <div className="header">
                 <h1>
@@ -88,8 +81,9 @@ ReactDOM.render(
                 </h1>
             </div>
             <Route exact path="/" component={Dashboard}/>
-            <Route exact path="/details/:id" component={Details}/>
+            <Route exact path="/task/:id" component={TaskDetails}/>
         </div>
+        </Provider>
     </BrowserRouter>,
     document.getElementById("app")
 )
