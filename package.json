@@ -1,0 +1,45 @@
+{
+  "name": "mongo-express-react",
+  "version": "1.0.0",
+  "description": "",
+  "main": "index.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1",
+    "dev": "webpack-dev-server",
+    "server": "babel-node src/server",
+    "server-dev": "nodemon src/server --exec babel-node src/server",
+    "start": "concurrently \"npm run server-dev\" \"npm run dev\""
+  },
+  "keywords": [],
+  "author": "",
+  "license": "ISC",
+  "dependencies": {
+    "axios": "^0.18.0",
+    "body-parser": "^1.18.3",
+    "cors": "^2.8.4",
+    "express": "^4.16.3",
+    "less-loader": "^4.1.0",
+    "react": "^16.4.2",
+    "react-dom": "^16.5.0",
+    "react-router": "^4.3.1",
+    "react-router-dom": "^4.3.1",
+    "redux": "^4.0.0"
+  },
+  "devDependencies": {
+    "@babel/core": "^7.0.0",
+    "@babel/node": "^7.0.0",
+    "@babel/preset-env": "^7.0.0",
+    "@babel/preset-react": "^7.0.0",
+    "@babel/register": "^7.0.0",
+    "babel-loader": "^8.0.2",
+    "concurrently": "^4.0.1",
+    "css-loader": "^1.0.0",
+    "less": "^3.8.1",
+    "less-loader": "^4.1.0",
+    "nodemon": "^1.18.4",
+    "style-loader": "^0.23.0",
+    "webpack": "^4.17.2",
+    "webpack-cli": "^3.1.0",
+    "webpack-dev-server": "^3.1.7"
+  }
+}
