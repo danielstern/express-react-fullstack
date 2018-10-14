@@ -1,6 +1,6 @@
-export const REQUEST_USER_INFO = `REQUEST_USER_INFO`;
+export const REQUEST_TASK_DETAILS = `REQUEST_TASK_DETAILS`;
 
-export const requestUserInfo = (id)=>({
-    type:REQUEST_USER_INFO,
+export const requestTaskDetails = (id)=>({
+    type:REQUEST_TASK_DETAILS,
     id
 });

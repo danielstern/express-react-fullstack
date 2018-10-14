@@ -1,6 +1,10 @@
-import { createStore, combineReducers } from 'redux';
+import { createStore, combineReducers, applyMiddleware } from 'redux';
 import * as mutations from './mutations'
 import {  defaultState } from '../../server/defaultState'
+
+import createSagaMiddleware from 'redux-saga'
+import { TaskDetailsSaga } from './sagas'
+const sagaMiddleware = createSagaMiddleware();
 
 const reducer = combineReducers({
     session:()=>defaultState.session,
@@ -26,5 +30,7 @@ const reducer = combineReducers({
 
 export const store = createStore(
     reducer,
-    window.__REDUX_DEVTOOLS_EXTENSION__ && window.__REDUX_DEVTOOLS_EXTENSION__()
+    applyMiddleware(sagaMiddleware)
 );
+
+sagaMiddleware.run(TaskDetailsSaga);

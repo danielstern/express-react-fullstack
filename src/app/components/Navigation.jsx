@@ -1,11 +1,13 @@
 import { connect } from 'react-redux';
-import React from 'react';
 import { Link } from 'react-router-dom';
+import React from 'react';
 
-const Navigation = ({name})=>(
+import { ConnectedUsernameDisplay } from './UsernameDisplay'
+
+const Navigation = ({id})=>(
     <div className="header">
         <h1>
-            Welcome, {name}!
+            Welcome, <ConnectedUsernameDisplay id={id}/>!
         </h1>
         <ul>
             <Link to="/">
@@ -13,9 +15,11 @@ const Navigation = ({name})=>(
             </Link>
         </ul>
     </div>
-)
+);
 
-export const ConnectedNavigation = connect(state=>({
-    name:state.users.find(user=>user.id === state.session.id).name
-}))(Navigation);
+const mapStateToProps = (state)=>({
+    id:state.session.id,
+});
+
+export const ConnectedNavigation = connect(mapStateToProps)(Navigation);
 

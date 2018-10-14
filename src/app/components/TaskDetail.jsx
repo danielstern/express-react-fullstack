@@ -1,14 +1,18 @@
 import React from 'react';
 import uuid from 'uuid';
 import { connect } from 'react-redux';
+import { withRouter } from 'react-router-dom';
+
+import { ConnectedUsernameDisplay } from './UsernameDisplay'
 
 import {
     setTaskCompletion,
     addTaskComment
 } from '../store/mutations'
 
-import * as events from '../store/events';
-
+import {
+    requestTaskDetails
+} from '../store/events';
 
 const TaskDetail = ({
     id,
@@ -33,7 +37,7 @@ const TaskDetail = ({
             {comments.map(comment=>(
                 <div key={comment.id}>
                     {/* TODO... display commenter's name, not just ID... preferably do this in a non-relational manner*/}
-                    {comment.owner} : {comment.content}
+                    <ConnectedUsernameDisplay id={comment.owner}/> : {comment.content}
                 </div>
             ))}
             </div>
@@ -76,7 +80,10 @@ function mapStateToProps(state,ownProps){
     };
 }
 
-function mapDispatchToProps(dispatch){
+function mapDispatchToProps(dispatch,ownProps){
+    let id = ownProps.match.params.id;
+    dispatch(requestTaskDetails(id));
+
     return {
         setTaskCompletion(id,complete){
             dispatch(setTaskCompletion(id,complete));
@@ -92,4 +99,4 @@ function mapDispatchToProps(dispatch){
     }
 }
 
-export const ConnectedTaskDetail = connect(mapStateToProps,mapDispatchToProps)(TaskDetail);
+export const ConnectedTaskDetail = withRouter(connect(mapStateToProps,mapDispatchToProps)(TaskDetail));
