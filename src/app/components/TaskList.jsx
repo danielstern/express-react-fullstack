@@ -2,11 +2,11 @@ import { connect } from 'react-redux';
 import { Link } from 'react-router-dom';
 import React from 'react';
 
-export const TaskListItem = ({id,name,commentCount})=>(
+export const TaskListItem = ({id,name,commentCount,complete})=>(
     <Link to={`/task/${id}`}>
         <li>
             <span>
-                {name} ({commentCount})
+                {name} ({commentCount}) {complete ? `✓` : null}
             </span>
         </li>
     </Link>
@@ -33,8 +33,7 @@ export const GroupContainer = ({tasks,comments,name})=>(
 );
 
 
-export const ConnectedGroupContainer = connect((state,ownProps)=>{
-    console.log("Connected?",ownProps);
+export const ConnectedTaskList = connect((state, ownProps)=>{
     return {
         name:ownProps.name,
         tasks: state.tasks.filter(task=>task.parent === ownProps.id),
