@@ -6,14 +6,22 @@ import { ConnectedUsernameDisplay } from './UsernameDisplay'
 
 const Navigation = ({id})=>(
     <div className="header">
-        <h1>
+        <Link to="/">
+            <h1>
+                Daily Organizer
+            </h1>
+        </Link>
+        <h4>
             Welcome, <ConnectedUsernameDisplay id={id}/>!
-        </h1>
-        <ul>
+        </h4>
+        {/*<Link to="/">*/}
+            {/*<span>Home</span>*/}
+        {/*</Link>*/}
+        {/*<ul>
             <Link to="/">
                 <li>Home</li>
             </Link>
-        </ul>
+        </ul>*/}
     </div>
 );
 

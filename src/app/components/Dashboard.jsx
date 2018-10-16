@@ -3,9 +3,9 @@ import { connect } from 'react-redux';
 import React from 'react';
 
 const Dashboard = ({groups})=>(
-    <div>
+    <div className="row">
         {groups.map(group=>(
-            <ConnectedTaskList key={group.id} {...group}/>
+            <ConnectedTaskList key={group.id} {...group} className="col"/>
         ))}
     </div>
 )

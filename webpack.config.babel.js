@@ -20,7 +20,7 @@ export default {
             loader:'babel-loader'
         },
         {
-            test: /\.less$/,
+            test: /\.(c|le)ss$/,
             use: [{
                 loader: 'style-loader'
             }, {

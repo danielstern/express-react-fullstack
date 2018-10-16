@@ -4,11 +4,11 @@ import React from 'react';
 
 export const TaskListItem = ({id,name,commentCount,complete})=>(
     <Link to={`/task/${id}`}>
-        <li>
+        <div className="card p-2 mt-2">
             <span>
                 {name} ({commentCount}) {complete ? `✓` : null}
             </span>
-        </li>
+        </div>
     </Link>
 )
 
@@ -19,23 +19,24 @@ export const ConnectedTaskListItem = connect((state, ownProps)=>{
     };
 })(TaskListItem);
 
-export const GroupContainer = ({tasks,comments,name})=>(
-    <div className="group-container">
+export const TaskList = ({tasks,comments,name})=>(
+    <div className="card p-2 m-2">
         <h2>
             {name}
         </h2>
-        <ul>
+        <div>
             {tasks.map(task=>(
                 <ConnectedTaskListItem {...task} key={task.id}/>
             ))}
-        </ul>
+        </div>
     </div>
 );
 
-
-export const ConnectedTaskList = connect((state, ownProps)=>{
+const mapStateToProps = (state, ownProps)=>{
     return {
         name:ownProps.name,
         tasks: state.tasks.filter(task=>task.parent === ownProps.id),
     };
-})(GroupContainer);
+};
+
+export const ConnectedTaskList = connect(mapStateToProps)(TaskList);

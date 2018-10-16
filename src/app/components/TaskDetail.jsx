@@ -20,17 +20,18 @@ const TaskDetail = ({
     task,
     isOwner,
     complete,
+    owner,
     sessionID,
     setTaskCompletion,
     addTaskComment
 })=>{
     return (
-        <div>
+        <div className="card p-3">
             <h3>
                 {task.name} {complete ? `✓` : null}
             </h3>
             <div>
-                {isOwner ? <div>You are the owner of this task.</div> : <div></div>}
+                {isOwner ? <div>You are the owner of this task.</div> : <div><ConnectedUsernameDisplay id={owner}/> is the owner of this task.</div>}
             </div>
 
             <div>
@@ -47,17 +48,15 @@ const TaskDetail = ({
                         {complete ? `Reopen` : `Complete`} This Task
                     </button>
                 </div> :
-                <div>
-                    Only this task's owner can complete it or reopen it.
-                </div>
+                //<div>
+//                    Only this task's owner can complete it or reopen it.
+  //              </div>
+                null
             }
 
-            <h4>
-                Add A Comment
-            </h4>
-            <form onSubmit={(e)=>addTaskComment(id,sessionID,e)}>
-                <input type="text" name="commentContents"/>
-                <button type="submit">Submit</button>
+            <form className="form-inline" onSubmit={(e)=>addTaskComment(id,sessionID,e)}>
+                <input type="text" name="commentContents" placeholder="Add a comment" className="form-control col-3"/>
+                <button type="submit" className="btn">Submit</button>
             </form>
         </div>
     )
@@ -75,6 +74,7 @@ function mapStateToProps(state,ownProps){
         task,
         comments,
         isOwner,
+        owner: task.owner,
         sessionID: state.session.id,
         complete
     };
@@ -92,9 +92,12 @@ function mapDispatchToProps(dispatch,ownProps){
             let input = e.target[`commentContents`];
             let commentID = uuid();
             let content = input.value;
-            input.value = ``;
             e.preventDefault();
-            dispatch(addTaskComment(commentID, taskID, ownerID, content));
+            if (content !== ``) {
+                input.value = ``;
+                dispatch(addTaskComment(commentID, taskID, ownerID, content));
+            }
+
         }
     }
 }

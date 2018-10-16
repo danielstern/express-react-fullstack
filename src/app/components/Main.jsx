@@ -15,9 +15,9 @@ const history = createBrowserHistory();
 export const Main = ()=>(
     <Router history={history}>
         <Provider store={store}>
-            <div>
+            <div className="container mt-3">
                 <ConnectedNavigation/>
-                <Route exact path="/" component={ConnectedDashboard} onChange={()=>console.log("You hit this route up")}/>
+                <Route exact path="/" component={ConnectedDashboard} />
                 <Route exact path="/task/:id" component={ConnectedTaskDetail}/>
             </div>
         </Provider>
