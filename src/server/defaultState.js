@@ -49,6 +49,19 @@ export const defaultState = {
         owner:"U1",
         complete:false,
     }],
+    // actions are interesting but do they really provide any opportunities for learning that
+    // the comment model does not?
+    actions:[{
+        name:"Inquire about recent improvement at golf",
+        id: `A1`,
+        parent:`T2`,
+        complete: true
+    },{
+        name:"Ask for $50,000 Contract",
+        id: `A2`,
+        parent:`T2`,
+        complete: false
+    }],
     comments:[{
         owner:"U1",
         id:"C1",

@@ -5,13 +5,6 @@ export const UsernameDisplay = ({name})=>(
     <span>{name}</span>
 );
 
-const mapStateToProps = (state,ownProps)=>{
-    let user = state.users.find(user=>user.id===ownProps.id);
-    if (!user){
-        // here, the user data must be requested, but how can we do so?
-    } else {
-        return {...user};
-    }
-};
+const mapStateToProps = (state,ownProps)=>state.users.find(user=>user.id===ownProps.id);
 
 export const ConnectedUsernameDisplay = connect(mapStateToProps)(UsernameDisplay);

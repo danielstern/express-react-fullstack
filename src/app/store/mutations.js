@@ -4,7 +4,7 @@ export const ADD_TASK_COMMENT = `ADD_TASK_COMMENT`;
 export const setTaskCompletion = (id, complete = true)=>({
     type:SET_TASK_COMPLETE,
     id,
-    complete
+    isComplete
 });
 
 export const addTaskComment = (commentID, taskID, ownerID, content)=>({

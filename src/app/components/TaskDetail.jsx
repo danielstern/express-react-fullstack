@@ -10,10 +10,6 @@ import {
     addTaskComment
 } from '../store/mutations'
 
-import {
-    requestTaskDetails
-} from '../store/events';
-
 const TaskDetail = ({
     id,
     comments,
@@ -31,28 +27,29 @@ const TaskDetail = ({
                 {task.name} {complete ? `✓` : null}
             </h3>
             <div>
-                {isOwner ? <div>You are the owner of this task.</div> : <div><ConnectedUsernameDisplay id={owner}/> is the owner of this task.</div>}
-            </div>
+                {isOwner ?
+                    <div>
+                        <div>
+                            You are the owner of this task.
+                        </div>
+                        <div>
+                            <button  className="btn" onClick={() => setTaskCompletion(id,!complete)}>
+                                {complete ? `Reopen` : `Complete`} This Task
+                            </button>
+                        </div>
 
-            <div>
+                    </div> :
+                    <div>
+                        <ConnectedUsernameDisplay id={task.owner}/> is the owner of this task.
+                    </div>}
+            </div>
+            <div className="mt-5">
             {comments.map(comment=>(
                 <div key={comment.id}>
-                    {/* TODO... display commenter's name, not just ID... preferably do this in a non-relational manner*/}
                     <ConnectedUsernameDisplay id={comment.owner}/> : {comment.content}
                 </div>
             ))}
             </div>
-            {isOwner ?
-                <div>
-                    <button onClick={() => setTaskCompletion(id,!complete)}>
-                        {complete ? `Reopen` : `Complete`} This Task
-                    </button>
-                </div> :
-                //<div>
-//                    Only this task's owner can complete it or reopen it.
-  //              </div>
-                null
-            }
 
             <form className="form-inline" onSubmit={(e)=>addTaskComment(id,sessionID,e)}>
                 <input type="text" name="commentContents" placeholder="Add a comment" className="form-control col-3"/>
@@ -66,27 +63,25 @@ function mapStateToProps(state,ownProps){
     let id = ownProps.match.params.id;
     let task = state.tasks.find(task=>task.id === id);
     let comments = state.comments.filter(comment=>comment.task === id);
+    let actions = state.actions.filter(action=>action.parent === id);
     let isOwner = state.session.id === task.owner;
-    let complete = task.complete;
 
+    console.log(actions);
     return {
         id,
         task,
         comments,
         isOwner,
-        owner: task.owner,
+        actions,
         sessionID: state.session.id,
-        complete
+        isComplete: task.isComplete
     };
 }
 
-function mapDispatchToProps(dispatch,ownProps){
-    let id = ownProps.match.params.id;
-    dispatch(requestTaskDetails(id));
-
+function mapDispatchToProps(dispatch){
     return {
-        setTaskCompletion(id,complete){
-            dispatch(setTaskCompletion(id,complete));
+        setTaskCompletion(id,isComplete){
+            dispatch(setTaskCompletion(id,isComplete));
         },
         addTaskComment(taskID, ownerID, e) {
             let input = e.target[`commentContents`];
