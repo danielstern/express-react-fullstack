@@ -15,7 +15,7 @@ const TaskDetail = ({
     comments,
     task,
     isOwner,
-    complete,
+    isComplete,
     owner,
     sessionID,
     setTaskCompletion,
@@ -24,18 +24,19 @@ const TaskDetail = ({
     return (
         <div className="card p-3">
             <h3>
-                {task.name} {complete ? `✓` : null}
+                {task.name} {isComplete ? `✓` : null}
             </h3>
             <div>
                 {isOwner ?
                     <div>
                         <div>
                             You are the owner of this task.
+                            <button  className="btn btn-primary ml-2" onClick={() => setTaskCompletion(id,!isComplete)}>
+                                {isComplete ? `Reopen` : `Complete`} This Task
+                            </button>
                         </div>
                         <div>
-                            <button  className="btn" onClick={() => setTaskCompletion(id,!complete)}>
-                                {complete ? `Reopen` : `Complete`} This Task
-                            </button>
+
                         </div>
 
                     </div> :
@@ -63,16 +64,13 @@ function mapStateToProps(state,ownProps){
     let id = ownProps.match.params.id;
     let task = state.tasks.find(task=>task.id === id);
     let comments = state.comments.filter(comment=>comment.task === id);
-    let actions = state.actions.filter(action=>action.parent === id);
     let isOwner = state.session.id === task.owner;
 
-    console.log(actions);
     return {
         id,
         task,
         comments,
         isOwner,
-        actions,
         sessionID: state.session.id,
         isComplete: task.isComplete
     };

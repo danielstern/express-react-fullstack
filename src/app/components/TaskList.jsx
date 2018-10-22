@@ -2,11 +2,11 @@ import { connect } from 'react-redux';
 import { Link } from 'react-router-dom';
 import React from 'react';
 
-export const TaskListItem = ({id,name,commentCount,complete})=>(
+export const TaskListItem = ({id,name,commentCount,isComplete})=>(
     <Link to={`/task/${id}`}>
         <div className="card p-2 mt-2">
             <span>
-                {name} ({commentCount}) {complete ? `✓` : null}
+                {name} ({commentCount}) {isComplete ? `✓` : null}
             </span>
         </div>
     </Link>
