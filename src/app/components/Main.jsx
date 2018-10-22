@@ -3,7 +3,6 @@ import { BrowserRouter, Route, Router } from 'react-router-dom';
 import { Provider } from 'react-redux';
 import { createBrowserHistory } from 'history'
 
-
 import { ConnectedTaskDetail } from './TaskDetail'
 import { ConnectedDashboard } from './Dashboard'
 import { ConnectedNavigation } from './Navigation'

@@ -1,9 +1,14 @@
 import { createStore, combineReducers, applyMiddleware } from 'redux';
 import createSagaMiddleware from 'redux-saga'
 import * as mutations from './mutations'
+import { taskCreationSaga } from './sagas'
 import {  defaultState } from '../../server/defaultState'
 
 const sagaMiddleware = createSagaMiddleware();
+
+/**
+ * Todo... seprate reducer logic into appropriate separate files
+ */
 
 const reducer = combineReducers({
     session:()=>defaultState.session,
@@ -21,7 +26,15 @@ const reducer = combineReducers({
             case mutations.SET_TASK_COMPLETE:
                 return tasks.map(task=>{
                     return (task.id === action.id) ? {...task,isComplete:action.isComplete} : task;
-                })
+                });
+            case mutations.CREATE_TASK:
+                return [...tasks,{
+                    id:action.taskID,
+                    name:"New Task",
+                    group:action.groupID,
+                    owner:action.ownerID,
+                    isComplete:false
+                }]
         }
         return tasks;
     }
@@ -31,3 +44,5 @@ export const store = createStore(
     reducer,
     applyMiddleware(sagaMiddleware)
 );
+
+sagaMiddleware.run(taskCreationSaga);
