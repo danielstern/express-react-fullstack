@@ -27,6 +27,14 @@ const reducer = combineReducers({
                 return tasks.map(task=>{
                     return (task.id === action.id) ? {...task,isComplete:action.isComplete} : task;
                 });
+            case mutations.SET_TASK_GROUP:
+                return tasks.map(task=>{
+                    return (task.id === action.taskID) ? {...task, group:action.groupID} : task;
+                });
+            case mutations.SET_TASK_NAME:
+                return tasks.map(task=> {
+                    return (task.id === action.taskID) ? {...task, name: action.name} : task;
+                });
             case mutations.CREATE_TASK:
                 return [...tasks,{
                     id:action.taskID,
