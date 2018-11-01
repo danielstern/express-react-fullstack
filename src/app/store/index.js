@@ -1,8 +1,10 @@
 import { createStore, combineReducers, applyMiddleware } from 'redux';
 import createSagaMiddleware from 'redux-saga'
 import * as mutations from './mutations'
-import { taskCreationSaga } from './sagas'
-import {  defaultState } from '../../server/defaultState'
+import * as sagas from './sagas.mock'
+// import { taskCreationSaga } from './sagas.mock'
+import { defaultState } from '../../server/defaultState'
+import {createLogger} from 'redux-logger'
 
 const sagaMiddleware = createSagaMiddleware();
 
@@ -11,7 +13,16 @@ const sagaMiddleware = createSagaMiddleware();
  */
 
 const reducer = combineReducers({
-    session:()=>defaultState.session,
+    session(userSession = defaultState.session,{type,authenticated, session}){
+        switch(type){
+            case mutations.REQUEST_AUTHENTICATE_USER:
+                return {...userSession, authenticated:`PROCESSING`}
+            case mutations.PROCESSING_AUTHENTICATE_USER:
+                return {authenticated:`AUTHENTICATED`,...session};
+            default:
+                return userSession;
+        }
+    },
     comments:(comments = defaultState.comments,{type,owner,task,content,id})=>{
         switch (type) {
             case mutations.ADD_TASK_COMMENT:
@@ -50,7 +61,8 @@ const reducer = combineReducers({
 
 export const store = createStore(
     reducer,
-    applyMiddleware(sagaMiddleware)
+    applyMiddleware(createLogger(), sagaMiddleware)
 );
 
-sagaMiddleware.run(taskCreationSaga);
+sagaMiddleware.run(sagas.taskCreationSaga);
+sagaMiddleware.run(sagas.userAuthenticationSaga);

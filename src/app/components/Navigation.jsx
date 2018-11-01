@@ -4,29 +4,31 @@ import React from 'react';
 
 import { ConnectedUsernameDisplay } from './UsernameDisplay'
 
-const Navigation = ({id})=>(
+const Navigation = ({id, authenticated})=>(
     <div className="header">
-        <Link to="/">
+        { authenticated ?
+            <Link to="/dashboard">
+                <h1>
+                    Daily Organizer
+                </h1>
+            </Link> :
             <h1>
                 Daily Organizer
             </h1>
-        </Link>
-        <h4>
-            Welcome, <ConnectedUsernameDisplay id={id}/>!
-        </h4>
-        {/*<Link to="/">*/}
-            {/*<span>Home</span>*/}
-        {/*</Link>*/}
-        {/*<ul>
-            <Link to="/">
-                <li>Home</li>
-            </Link>
-        </ul>*/}
+        }
+
+        { authenticated ?
+            <h4>
+                Welcome, <ConnectedUsernameDisplay id={id}/>!
+            </h4>
+            : null
+        }
     </div>
 );
 
 const mapStateToProps = (state)=>({
     id:state.session.id,
+    authenticated:state.session.authenticated == `AUTHENTICATED`
 });
 
 export const ConnectedNavigation = connect(mapStateToProps)(Navigation);
