@@ -1,3 +1,4 @@
+import md5 from 'md5';
 export const defaultState = {
     session:{
         // id:"U1",
@@ -7,9 +8,13 @@ export const defaultState = {
     users:[{
         id:"U1",
         name:"Alexander",
+        passwordHash:md5("greatness"),
+        friends:[`U2`]
     },{
         id:"U2",
-        name:"Dorias"
+        name:"Dorias",
+        passwordHash:md5("efgh"),
+        friends:[]
     }],
     groups:[{
         name:"To Do",
@@ -26,7 +31,7 @@ export const defaultState = {
     }
     ],
     tasks:[{
-        name:"Refactor Tests",
+        name:"Refactor tests",
         id:"T1",
         group:"G1",
         owner:"U1",
@@ -44,8 +49,14 @@ export const defaultState = {
         owner:"U2",
         isComplete:false,
     },{
-        name:"Production Optimizations",
+        name:"Update component snapshots",
         id:"T4",
+        group:"G2",
+        owner:"U1",
+        isComplete:true,
+    },{
+        name:"Production optimizations",
+        id:"T5",
         group:"G3",
         owner:"U1",
         isComplete:false,

@@ -8,9 +8,11 @@ const LoginComponent = ({authenticateUser,authenticated})=>(
             Please login
         </h2>
         <form onSubmit={authenticateUser}>
-            <input type="text" placeholder="username" name="username" defaultValue="alexander" className="form-control"/>
+            <input type="text" placeholder="username" name="username" defaultValue="Alexander" className="form-control"/>
             <input type="text" placeholder="password" name="password" defaultValue="greatness" className="form-control mt-2"/>
-            <button type="submit" disabled={authenticated === `PROCESSING`} className="form-control mt-2 btn btn-primary">Login</button>
+            <button type="submit" disabled={authenticated === `PROCESSING`} className="form-control mt-2 btn btn-primary">
+                Login
+            </button>
         </form>
     </div>
 );
