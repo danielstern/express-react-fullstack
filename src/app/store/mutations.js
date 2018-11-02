@@ -57,7 +57,8 @@ export const requestAuthenticateUser = (username, password)=>({
 
 export const processAuthenticateUser = (status = AUTHENTICATING, session = null)=>({
     type: PROCESSING_AUTHENTICATE_USER,
-    session
+    session,
+    authenticated: status
 });
 
 export const setState = (state = {})=>({

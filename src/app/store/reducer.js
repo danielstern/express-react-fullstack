@@ -15,7 +15,7 @@ export const reducer = combineReducers({
             case mutations.REQUEST_AUTHENTICATE_USER:
                 return {...userSession, authenticated:`PROCESSING`}
             case mutations.PROCESSING_AUTHENTICATE_USER:
-                return {authenticated:`AUTHENTICATED`,...session};
+                return {...userSession, authenticated};
             default:
                 return userSession;
         }

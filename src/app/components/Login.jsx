@@ -10,6 +10,9 @@ const LoginComponent = ({authenticateUser,authenticated})=>(
         <form onSubmit={authenticateUser}>
             <input type="text" placeholder="username" name="username" defaultValue="Alexander" className="form-control"/>
             <input type="text" placeholder="password" name="password" defaultValue="greatness" className="form-control mt-2"/>
+            {authenticated === `NOT_AUTHENTICATED` ? <p>
+                Login incorrect.
+            </p> : null}
             <button type="submit" disabled={authenticated === `PROCESSING`} className="form-control mt-2 btn btn-primary">
                 Login
             </button>

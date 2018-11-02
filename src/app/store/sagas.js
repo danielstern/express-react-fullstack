@@ -19,13 +19,13 @@ export function* userAuthenticationSaga(){
             const { data } = yield axios.post(url + `/authenticate`,{username,password});
             yield put(mutations.setState(data.state));
             yield put(mutations.processAuthenticateUser(mutations.AUTHENTICATED, {
-                id:"U1",
+                id:"U1", // todo... get ID from response
                 token:data.token
             }));
 
             history.push(`/dashboard`);
-            console.log(data);
         } catch (e) {
+            yield put(mutations.processAuthenticateUser(mutations.NOT_AUTHENTICATED));
             // catch block handles failed login
         }
     }
