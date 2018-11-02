@@ -10,8 +10,11 @@ const defaultState = {
 };
 
 export const reducer = combineReducers({
-    session(userSession = defaultState.session,{type,authenticated, session}){
+    session(userSession = defaultState.session,action){
+        let {type,authenticated, session} = action;
         switch(type){
+            case mutations.SET_STATE:
+                return {...userSession, id: action.state.session.id}
             case mutations.REQUEST_AUTHENTICATE_USER:
                 return {...userSession, authenticated:`PROCESSING`}
             case mutations.PROCESSING_AUTHENTICATE_USER:

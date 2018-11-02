@@ -62,6 +62,7 @@ app.post('/authenticate',(req,res)=>{
     console.log(associatedUsers);
 
     let state = {
+        session:{authenticated:`AUTHENTICATED`,id:user.id},
         groups:defaultState.groups.filter(group=>group.owner === user.id),
         tasks:associatedTasks,
         users: [user, ... associatedUsers],
