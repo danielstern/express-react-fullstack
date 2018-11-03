@@ -22,11 +22,10 @@ export function* userAuthenticationSaga(){
                 id:"U1", // todo... get ID from response
                 token:data.token
             }));
-
             history.push(`/dashboard`);
         } catch (e) {
+            /* catch block handles failed login */
             yield put(mutations.processAuthenticateUser(mutations.NOT_AUTHENTICATED));
-            // catch block handles failed login
         }
     }
 }

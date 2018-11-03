@@ -1,8 +1,7 @@
 import React from 'react';
 import uuid from 'uuid';
 import { connect } from 'react-redux';
-import { withRouter } from 'react-router-dom';
-import { Link } from 'react-router';
+import { Link } from 'react-router-dom';
 import { ConnectedUsernameDisplay } from './UsernameDisplay'
 
 import {
@@ -82,11 +81,13 @@ const TaskDetail = ({
                 <button type="submit" className="btn">Submit</button>
             </form>
 
-            {/*<Link to="/dashboard" className="mt-2">*/}
-                {/*<button>*/}
-                    {/*Done*/}
-                {/*</button>*/}
-            {/*</Link>*/}
+            <div>
+            <Link to="/dashboard">
+                <button className="btn btn-primary mt-2">
+                    Done
+                </button>
+            </Link>
+            </div>
         </div>
     )
 }
@@ -134,4 +135,4 @@ function mapDispatchToProps(dispatch, ownProps){
     }
 }
 
-export const ConnectedTaskDetail = withRouter(connect(mapStateToProps,mapDispatchToProps)(TaskDetail));
+export const ConnectedTaskDetail = connect(mapStateToProps,mapDispatchToProps)(TaskDetail);

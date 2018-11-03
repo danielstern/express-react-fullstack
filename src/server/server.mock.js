@@ -1,10 +1,13 @@
+/**
+ * This mock server does not communicate with the DB and therefore does not provide data persistence.
+ */
+
 import express from 'express';
 import cors from 'cors';
 import bodyParser from 'body-parser';
 import { defaultState } from './defaultState';
 import uuid from 'uuid';
 import md5 from 'md5';
-
 
 let port = 7777;
 let app = express();
@@ -17,9 +20,6 @@ app.use(
     bodyParser.json()
 );
 app.listen(port,console.info("Server running, listening on port ", port));
-app.post('/board',(req,res)=>{
-    res.send({message:"Successfully communicated between server and app"});
-});
 
 app.get('/user/:id',(req,res)=>{
     let user = defaultState.users.find(user=>user.id === req.params.id);
@@ -43,7 +43,6 @@ app.post('/authenticate',(req,res)=>{
         return res.status(500).send('Password incorrect');
     }
 
-    // Note: uuid is predicta
     let token = uuid();
 
     authorizationTokens.push({
@@ -60,8 +59,6 @@ app.post('/authenticate',(req,res)=>{
     let associatedTasks = defaultState.tasks.filter(task=>task.owner === user.id);
     let associatedComments = defaultState.comments.filter(comment=>associatedTasks.map(task=>task.id).includes(comment.task))
 
-    console.log(associatedUsers);
-
     let state = {
         session:{authenticated:`AUTHENTICATED`,id:user.id},
         groups:defaultState.groups.filter(group=>group.owner === user.id),
@@ -71,5 +68,18 @@ app.post('/authenticate',(req,res)=>{
     };
 
     res.send({token,state});
+});
 
+app.post(`/task/new`,(req,res)=>{
+    let { task } = req.body;
+    res.status(200).send();
+});
+
+app.post(`/task/update`,(req,res)=>{
+    let { task } = req.body;
+    res.status(200).send();
+});
+
+app.post(`comment/new`,(req,res)=>{
+    res.status(200).send();
 });

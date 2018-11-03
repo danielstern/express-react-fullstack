@@ -29,6 +29,5 @@ export function* userAuthenticationSaga(){
         }));
 
         history.push(`/dashboard`)
-
     }
 }

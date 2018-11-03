@@ -3,7 +3,7 @@ import * as mutations from './mutations'
 import { defaultState as state } from '../../server/defaultState'
 
 /* development can slow down if you need to visit the login page every time you make a change.*/
-let defaultState = window.location.href.includes('dev') ? {...state,session:{token:"abcd",id:"U1"}} : {
+let defaultState = window.location.href.includes('dev') ? {...state,session:{token:"abcd",id:"U1",authenticated:true}} : {
     session:{},
     comments:[],
     users:[],
