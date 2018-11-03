@@ -41,6 +41,9 @@ export const defaultState = {
         id:"T2",
         group:"G1",
         owner:"U1",
+        
+        
+        
         isComplete:true,
     },{
         name:"Compile ES6",

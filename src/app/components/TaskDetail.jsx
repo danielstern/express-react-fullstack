@@ -2,7 +2,7 @@ import React from 'react';
 import uuid from 'uuid';
 import { connect } from 'react-redux';
 import { withRouter } from 'react-router-dom';
-
+import { Link } from 'react-router';
 import { ConnectedUsernameDisplay } from './UsernameDisplay'
 
 import {
@@ -81,6 +81,12 @@ const TaskDetail = ({
                 <input type="text" name="commentContents" autoComplete="off" placeholder="Add a comment" className="form-control"/>
                 <button type="submit" className="btn">Submit</button>
             </form>
+
+            {/*<Link to="/dashboard" className="mt-2">*/}
+                {/*<button>*/}
+                    {/*Done*/}
+                {/*</button>*/}
+            {/*</Link>*/}
         </div>
     )
 }
