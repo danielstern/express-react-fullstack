@@ -3,8 +3,8 @@ import createSagaMiddleware from 'redux-saga'
 import {createLogger} from 'redux-logger'
 
 import { reducer } from './reducer'
-import { taskCreationSaga } from './sagas.mock'
-import { userAuthenticationSaga } from './sagas'
+// import { taskCreationSaga } from './sagas.mock'
+import { userAuthenticationSaga, taskCreationSaga } from './sagas'
 
 const sagaMiddleware = createSagaMiddleware();
 

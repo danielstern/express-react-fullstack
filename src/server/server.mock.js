@@ -30,45 +30,6 @@ app.get('/user/:id',(req,res)=>{
     }
 });
 
-app.post('/authenticate',(req,res)=>{
-    let { username, password } = req.body;
-    let user = defaultState.users.find(user=>user.name === username);
-    if (!user) {
-        return res.status(500).send(`User not found`);
-    }
-
-    let hash = md5(password);
-    let passwordCorrect = hash === user.passwordHash;
-    if (!passwordCorrect) {
-        return res.status(500).send('Password incorrect');
-    }
-
-    let token = uuid();
-
-    authorizationTokens.push({
-        token,
-        userID: user.id
-    });
-
-    let associatedUsers = defaultState.users.filter(otherUser=>user.friends.includes(otherUser.id))
-    .map(user=>({
-        name:user.name,
-        id: user.id
-    }));
-
-    let associatedTasks = defaultState.tasks.filter(task=>task.owner === user.id);
-    let associatedComments = defaultState.comments.filter(comment=>associatedTasks.map(task=>task.id).includes(comment.task))
-
-    let state = {
-        session:{authenticated:`AUTHENTICATED`,id:user.id},
-        groups:defaultState.groups.filter(group=>group.owner === user.id),
-        tasks:associatedTasks,
-        users: [user, ... associatedUsers],
-        comments:associatedComments
-    };
-
-    res.send({token,state});
-});
 
 app.post(`/task/new`,(req,res)=>{
     let { task } = req.body;
