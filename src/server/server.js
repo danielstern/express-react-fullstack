@@ -9,7 +9,7 @@ const url = `mongodb://localhost:27017/organizer`;
 import express from 'express';
 import cors from 'cors';
 import bodyParser from 'body-parser';
-import { defaultState } from './defaultState';
+
 import uuid from 'uuid';
 import md5 from 'md5';
 import './initialize-db';
@@ -44,7 +44,13 @@ async function assembleUserState(user){
 
 app.post('/authenticate',async (req,res)=>{
     let { username, password } = req.body;
-    let user = defaultState.users.find(user=>user.name === username);
+    // let user = defaultState.users.find(user=>user.name === username);
+    let client = await MongoClient.connect(url);
+    let db = client.db('organizer');
+    let collection = db.collection(`users`);
+
+    let user = await collection.findOne({name:username});
+    console.log("User?",user,username);
     if (!user) {
         return res.status(500).send(`User not found`);
     }
@@ -82,7 +88,7 @@ app.post('/authenticate',async (req,res)=>{
 
     let state = await assembleUserState(user);
 
-    console.log(state);
+    // console.log(state);
 
     res.send({token,state});
 });
