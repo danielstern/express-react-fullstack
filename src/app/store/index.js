@@ -4,7 +4,7 @@ import {createLogger} from 'redux-logger'
 
 import { reducer } from './reducer'
 // import { taskCreationSaga } from './sagas.mock'
-import { userAuthenticationSaga, taskCreationSaga, commentCreationSaga } from './sagas'
+import { userAuthenticationSaga, taskCreationSaga, commentCreationSaga, taskModificationSaga } from './sagas'
 
 const sagaMiddleware = createSagaMiddleware();
 
@@ -16,3 +16,4 @@ export const store = createStore(
 sagaMiddleware.run(taskCreationSaga);
 sagaMiddleware.run(userAuthenticationSaga);
 sagaMiddleware.run(commentCreationSaga);
+sagaMiddleware.run(taskModificationSaga);

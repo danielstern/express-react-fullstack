@@ -85,6 +85,24 @@ app.post('/task/new',async (req,res)=>{
     res.status(200).send();
 });
 
+app.post('/task/update',async (req,res)=>{
+    let db = await connectDB();
+    let {id,group,isComplete,name} = req.body.task;
+    let collection = db.collection(`tasks`);
+    console.log(req.body.task);
+    if (group) {
+        await collection.updateOne({id},{$set:{group}});
+    }
+    if (name) {
+        await collection.updateOne({id},{$set:{name}});
+    }
+    if (isComplete !== undefined) {
+        await collection.updateOne({id},{$set:{isComplete}});
+    }
+
+    res.status(200).send();
+});
+
 
 app.post('/comment/new',async (req,res)=>{
     let comment = req.body.comment;

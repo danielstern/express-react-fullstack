@@ -33,6 +33,19 @@ export function* commentCreationSaga(){
     }
 }
 
+export function* taskModificationSaga(){
+    while (true){
+        const task = yield take([mutations.SET_TASK_GROUP, mutations.SET_TASK_NAME,mutations.SET_TASK_COMPLETE]);
+        axios.post(url + `/task/update`,{
+            task:{
+                id:task.taskID,
+                group:task.groupID,
+                name:task.name,
+                isComplete:task.isComplete
+            }});
+    }
+}
+
 export function* userAuthenticationSaga(){
     while (true){
         const {username,password} = yield take(mutations.REQUEST_AUTHENTICATE_USER);
