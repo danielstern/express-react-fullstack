@@ -14,6 +14,8 @@ import uuid from 'uuid';
 import md5 from 'md5';
 import './initialize-db';
 
+import { connectDB } from './connect-db'
+
 let port = 7777;
 let app = express();
 
@@ -28,15 +30,18 @@ app.listen(port,console.info("Server running, listening on port ", port));
 
 async function assembleUserState(user){
 
-    let client = await MongoClient.connect(url);
-    let db = client.db('organizer');
+    let db = await connectDB();
+
+    let tasks = await db.collection(`tasks`).find({owner:user.id}).toArray();
+    let comments = await db.collection(`comments`).find({task:{$in:tasks.map(task=>task.id)}}).toArray();
+    let users = await db.collection(`users`).find({id:{$in:[...tasks,comments].map(x=>x.owner)}}).toArray();
 
     let state = {
         session:{authenticated:`AUTHENTICATED`,id:user.id},
         groups:await db.collection(`groups`).find({owner:user.id}).toArray(),
-        tasks:await db.collection(`tasks`).find({owner:user.id}).toArray(),
-        users: [],
-        comments:[]
+        tasks,
+        users,
+        comments
     };
 
     return state;
@@ -45,8 +50,7 @@ async function assembleUserState(user){
 app.post('/authenticate',async (req,res)=>{
     let { username, password } = req.body;
     // let user = defaultState.users.find(user=>user.name === username);
-    let client = await MongoClient.connect(url);
-    let db = client.db('organizer');
+    let db = await connectDB();
     let collection = db.collection(`users`);
 
     let user = await collection.findOne({name:username});
@@ -67,38 +71,25 @@ app.post('/authenticate',async (req,res)=>{
         token,
         userID: user.id
     });
-    //
-    // let associatedUsers = defaultState.users.filter(otherUser=>user.friends.includes(otherUser.id))
-    //     .map(user=>({
-    //         name:user.name,
-    //         id: user.id
-    //     }));
-    //
-    // let associatedTasks = defaultState.tasks.filter(task=>task.owner === user.id);
-    // let associatedComments = defaultState.comments.filter(comment=>associatedTasks.map(task=>task.id).includes(comment.task))
-    //
-    // // todo... move state assemblage to own utility
-    // let state = {
-    //     session:{authenticated:`AUTHENTICATED`,id:user.id},
-    //     groups:defaultState.groups.filter(group=>group.owner === user.id),
-    //     tasks:associatedTasks,
-    //     users: [user, ... associatedUsers],
-    //     comments:associatedComments
-    // };
 
     let state = await assembleUserState(user);
-
-    // console.log(state);
 
     res.send({token,state});
 });
 
-// todo... centralize DB connection logic
 app.post('/task/new',async (req,res)=>{
     let task = req.body.task;
-    let client = await MongoClient.connect(url);
-    let db = client.db('organizer');
+    let db = await connectDB();
     let collection = db.collection(`tasks`);
     await collection.insertOne(task);
+    res.status(200).send();
+});
+
+
+app.post('/comment/new',async (req,res)=>{
+    let comment = req.body.comment;
+    let db = await connectDB();
+    let collection = db.collection(`comments`);
+    await collection.insertOne(comment);
     res.status(200).send();
 });

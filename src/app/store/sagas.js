@@ -14,7 +14,6 @@ export function* taskCreationSaga(){
         const ownerID = yield select(state=>state.session.id);
         const taskID = uuid();
         let mutation = mutations.createTask(taskID, groupID, ownerID);
-        console.log("MUT?",mutation);
         const { res } = yield axios.post(url + `/task/new`,{task:{
             id:taskID,
             group: groupID,
@@ -26,12 +25,19 @@ export function* taskCreationSaga(){
     }
 }
 
+export function* commentCreationSaga(){
+    while (true) {
+        const comment = yield take (mutations.ADD_TASK_COMMENT);
+        console.log(comment);
+        axios.post(url + `/comment/new`,{comment})
+    }
+}
+
 export function* userAuthenticationSaga(){
     while (true){
         const {username,password} = yield take(mutations.REQUEST_AUTHENTICATE_USER);
         try {
             const { data } = yield axios.post(url + `/authenticate`,{username,password});
-            console.log("Data from auth?",data);
             yield put(mutations.setState(data.state));
             yield put(mutations.processAuthenticateUser(mutations.AUTHENTICATED, {
                 id:"U1", // todo... get ID from response
