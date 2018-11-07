@@ -3,8 +3,7 @@ import createSagaMiddleware from 'redux-saga'
 import {createLogger} from 'redux-logger'
 
 import { reducer } from './reducer'
-// import { taskCreationSaga } from './sagas.mock'
-import { userAuthenticationSaga, taskCreationSaga, commentCreationSaga, taskModificationSaga } from './sagas'
+import * as sagas from './sagas'
 
 const sagaMiddleware = createSagaMiddleware();
 
@@ -13,7 +12,6 @@ export const store = createStore(
     applyMiddleware(createLogger(), sagaMiddleware)
 );
 
-sagaMiddleware.run(taskCreationSaga);
-sagaMiddleware.run(userAuthenticationSaga);
-sagaMiddleware.run(commentCreationSaga);
-sagaMiddleware.run(taskModificationSaga);
+for (let saga in sagas) {
+    sagaMiddleware.run(sagas[saga]);
+}

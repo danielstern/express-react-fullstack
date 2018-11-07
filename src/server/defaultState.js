@@ -1,19 +1,14 @@
 import md5 from 'md5';
 export const defaultState = {
-    // session:{
-    //     // id:"U1",
-    //     // token:"ABCD-1234",
-    //     authenticated:`NOT_AUTHENTICATED`
-    // },
     users:[{
         id:"U1",
-        name:"Alexander",
-        passwordHash:md5("greatness"),
+        name:"Dev",
+        passwordHash:md5("TUPLES"),
         friends:[`U2`]
     },{
         id:"U2",
-        name:"Dorias",
-        passwordHash:md5("efgh"),
+        name:"C. Eeyo",
+        passwordHash:md5("PROFITING"),
         friends:[]
     }],
     groups:[{
@@ -41,9 +36,6 @@ export const defaultState = {
         id:"T2",
         group:"G1",
         owner:"U1",
-        
-        
-        
         isComplete:true,
     },{
         name:"Compile ES6",

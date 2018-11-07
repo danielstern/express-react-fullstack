@@ -28,7 +28,6 @@ export function* taskCreationSaga(){
 export function* commentCreationSaga(){
     while (true) {
         const comment = yield take (mutations.ADD_TASK_COMMENT);
-        console.log(comment);
         axios.post(url + `/comment/new`,{comment})
     }
 }

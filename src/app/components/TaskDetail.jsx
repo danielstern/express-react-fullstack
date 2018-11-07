@@ -17,9 +17,9 @@ const TaskDetail = ({
     task,
     isOwner,
     isComplete,
-    owner,
     sessionID,
     groups,
+
     setTaskCompletion,
     addTaskComment,
     setTaskGroup,
@@ -46,11 +46,8 @@ const TaskDetail = ({
                                 {isComplete ? `Reopen` : `Complete`} This Task
                             </button>
                         </div>
-                        <div>
-
-                        </div>
-
-                    </div> :
+                    </div>
+                    :
                     <div>
                         <ConnectedUsernameDisplay id={task.owner}/> is the owner of this task.
                     </div>}

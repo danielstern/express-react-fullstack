@@ -6,8 +6,6 @@ import express from 'express';
 import cors from 'cors';
 import bodyParser from 'body-parser';
 import { defaultState } from './defaultState';
-import uuid from 'uuid';
-import md5 from 'md5';
 
 let port = 7777;
 let app = express();
@@ -19,6 +17,7 @@ app.use(
     bodyParser.urlencoded({extended:true}),
     bodyParser.json()
 );
+
 app.listen(port,console.info("Server running, listening on port ", port));
 
 app.get('/user/:id',(req,res)=>{
@@ -29,7 +28,6 @@ app.get('/user/:id',(req,res)=>{
         res.json(user);
     }
 });
-
 
 app.post(`/task/new`,(req,res)=>{
     let { task } = req.body;

@@ -3,19 +3,15 @@ import { Link } from 'react-router-dom';
 import React from 'react';
 
 import { ConnectedUsernameDisplay } from './UsernameDisplay'
+import * as mutations from '../store/mutations';
 
 const Navigation = ({id, authenticated})=>(
     <div className="header">
-        { authenticated ?
-            <Link to="/dashboard">
-                <h1>
-                    Daily Organizer
-                </h1>
-            </Link> :
+        <Link to="/dashboard">
             <h1>
                 Daily Organizer
             </h1>
-        }
+        </Link>
 
         { authenticated ?
             <h4>
@@ -26,9 +22,9 @@ const Navigation = ({id, authenticated})=>(
     </div>
 );
 
-const mapStateToProps = (state)=>({
-    id:state.session.id,
-    authenticated:state.session.authenticated == `AUTHENTICATED`
+const mapStateToProps = ({session})=>({
+    id:session.id,
+    authenticated:session.authenticated == mutations.AUTHENTICATED
 });
 
 export const ConnectedNavigation = connect(mapStateToProps)(Navigation);

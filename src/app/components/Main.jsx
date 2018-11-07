@@ -1,5 +1,5 @@
 import React from 'react';
-import { BrowserRouter, Route, Router } from 'react-router-dom';
+import { Route, Router } from 'react-router-dom';
 import { Provider } from 'react-redux';
 import { createBrowserHistory } from 'history'
 
@@ -10,7 +10,6 @@ import { ConnectedLogin } from './Login'
 import { store } from '../store';
 
 export const history = createBrowserHistory();
-
 
 export const Main = ()=>(
     <Router history={history}>
