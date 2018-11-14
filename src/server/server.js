@@ -1,12 +1,11 @@
 import { MongoClient } from 'mongodb';
-
+import path from 'path';
 // todo... get PROD url
 console.log("PRod or dev?",process.env.NODE_ENV);
-const url = `mongodb://localhost:27017/organizer`;
+// const url = `mongodb://localhost:27017/organizer`;
 
-// todo... move this initializer function into own file
 
-// todo... add server routes
+
 import express from 'express';
 import cors from 'cors';
 import bodyParser from 'body-parser';
@@ -35,6 +34,10 @@ app.listen(port,console.info("Server running, listening on port ", port));
 app.get('/test',async (req,res)=>{
     res.send("42 hello!");
 });
+
+if (process.env.NODE_ENV == `production`) {
+    app.use(express.static(path.resolve(__dirname, '../dist')));
+}
 
 app.post('/authenticate',async (req,res)=>{
     let { username, password } = req.body;
