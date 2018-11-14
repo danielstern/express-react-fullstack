@@ -6,9 +6,10 @@
   "scripts": {
     "build": "webpack",
     "dev": "webpack-dev-server --open",
-    "server": "babel-node src/server",
+    "server": "cross-env NODE_ENV=development babel-node src/server",
     "server-dev": "nodemon src/server --exec babel-node src/server",
-    "start": "concurrently \"npm run server-dev\" \"npm run dev\""
+    "start-dev": "concurrently \"npm run server-dev\" \"npm run dev\"",
+    "start": "npm run build && cross-env NODE_ENV=production babel-node src/server"
   },
   "keywords": [],
   "author": "",
@@ -41,6 +42,7 @@
     "@babel/register": "^7.0.0",
     "babel-loader": "^8.0.2",
     "concurrently": "^4.0.1",
+    "cross-env": "^5.2.0",
     "css-loader": "^1.0.0",
     "less": "^3.8.1",
     "less-loader": "^4.1.0",

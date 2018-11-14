@@ -1,6 +1,7 @@
 import { MongoClient } from 'mongodb';
 
 // todo... get PROD url
+console.log("PRod or dev?",process.env.NODE_ENV);
 const url = `mongodb://localhost:27017/organizer`;
 
 // todo... move this initializer function into own file
@@ -17,8 +18,10 @@ import './initialize-db';
 import { connectDB } from './connect-db'
 import { assembleUserState } from './utility';
 
-let port = 7777;
+let port = process.env.PORT || 7777;
 let app = express();
+
+console.log("Port?",port);
 
 const authorizationTokens = [];
 
@@ -29,7 +32,9 @@ app.use(
 );
 app.listen(port,console.info("Server running, listening on port ", port));
 
-
+app.get('/test',async (req,res)=>{
+    res.send("42 hello!");
+});
 
 app.post('/authenticate',async (req,res)=>{
     let { username, password } = req.body;
@@ -84,7 +89,6 @@ app.post('/task/update',async (req,res)=>{
 
     res.status(200).send();
 });
-
 
 app.post('/comment/new',async (req,res)=>{
     let comment = req.body.comment;
