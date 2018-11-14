@@ -1,9 +1,7 @@
 import { combineReducers } from 'redux';
 import * as mutations from './mutations'
-import { defaultState as state } from '../../server/defaultState'
 
-// TODO ... this measure is not effective for most real testing purposes... better to be removed.
-let defaultState = window.location.href.includes('dev') ? {...state,session:{token:"abcd",id:"U1",authenticated:true}} : {
+let defaultState = {
     session:{},
     comments:[],
     users:[],
@@ -18,7 +16,7 @@ export const reducer = combineReducers({
             case mutations.SET_STATE:
                 return {...userSession, id: action.state.session.id};
             case mutations.REQUEST_AUTHENTICATE_USER:
-                return {...userSession, authenticated:`PROCESSING`};
+                return {...userSession, authenticated:mutations.AUTHENTICATING};
             case mutations.PROCESSING_AUTHENTICATE_USER:
                 return {...userSession, authenticated};
             default:
