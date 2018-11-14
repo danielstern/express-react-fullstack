@@ -91,11 +91,6 @@ const TaskDetail = ({
 }
 
 function mapStateToProps(state,ownProps){
-    // console.log("Route guard?",state);;
-    // problem: this throws an error before it can reroute...
-    // but putting additional logic in MSTP seems like a bad step...
-    // should this be in the router code... seems like it..?
-    // if (!routeGuard(state)) return {};
     let id = ownProps.match.params.id;
     let task = state.tasks.find(task=>task.id === id);
     let comments = state.comments.filter(comment=>comment.task === id);
