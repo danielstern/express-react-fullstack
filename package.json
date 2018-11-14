@@ -4,7 +4,7 @@
   "description": "",
   "main": "index.js",
   "scripts": {
-    "build": "webpack",
+    "build": "npm install --dev && webpack",
     "dev": "webpack-dev-server --open",
     "server": "cross-env NODE_ENV=development babel-node src/server",
     "server-dev": "nodemon src/server --exec babel-node src/server",
