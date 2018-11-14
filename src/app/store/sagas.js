@@ -2,7 +2,7 @@ import { take, put, select } from 'redux-saga/effects';
 import * as mutations from './mutations';
 import uuid from 'uuid';
 import {  }from 'react-router'
-import { history } from '../components/Main'
+import { history } from './history'
 import axios from 'axios';
 
 // todo... add prod url

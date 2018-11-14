@@ -18,8 +18,6 @@ app.use(
     bodyParser.json()
 );
 
-app.listen(port,console.info("Server running, listening on port ", port));
-
 app.get('/user/:id',(req,res)=>{
     let user = defaultState.users.find(user=>user.id === req.params.id);
     if (!user) {

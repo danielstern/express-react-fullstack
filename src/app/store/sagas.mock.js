@@ -3,7 +3,7 @@ import { delay } from 'redux-saga';
 import * as mutations from './mutations';
 import uuid from 'uuid';
 import {  }from 'react-router'
-import { history } from '../components/Main'
+import { history } from './history';
 
 /**
  * Reducers cannot have any randomness (the must be deterministic)

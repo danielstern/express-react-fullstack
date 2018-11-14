@@ -15,6 +15,7 @@ import md5 from 'md5';
 import './initialize-db';
 
 import { connectDB } from './connect-db'
+import { assembleUserState } from './utility';
 
 let port = 7777;
 let app = express();
@@ -28,33 +29,14 @@ app.use(
 );
 app.listen(port,console.info("Server running, listening on port ", port));
 
-async function assembleUserState(user){
 
-    let db = await connectDB();
-
-    let tasks = await db.collection(`tasks`).find({owner:user.id}).toArray();
-    let comments = await db.collection(`comments`).find({task:{$in:tasks.map(task=>task.id)}}).toArray();
-    let users = await db.collection(`users`).find({id:{$in:[...tasks,comments].map(x=>x.owner)}}).toArray();
-
-    let state = {
-        session:{authenticated:`AUTHENTICATED`,id:user.id},
-        groups:await db.collection(`groups`).find({owner:user.id}).toArray(),
-        tasks,
-        users,
-        comments
-    };
-
-    return state;
-}
 
 app.post('/authenticate',async (req,res)=>{
     let { username, password } = req.body;
-    // let user = defaultState.users.find(user=>user.name === username);
     let db = await connectDB();
     let collection = db.collection(`users`);
 
     let user = await collection.findOne({name:username});
-    console.log("User?",user,username);
     if (!user) {
         return res.status(500).send(`User not found`);
     }
