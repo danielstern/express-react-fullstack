@@ -33,8 +33,11 @@ app.get('/test',async (req,res)=>{
     res.send("42 hello!");
 });
 
+console.log("Evaluating env,",process.env.NODE_ENV);
 if (process.env.NODE_ENV == `production`) {
+    console.log("Using static build...");
     app.use(express.static(path.resolve(__dirname, '../dist')));
+    app.use(express.static(path.resolve(__dirname, 'index.html')));
 }
 
 app.post('/authenticate',async (req,res)=>{
