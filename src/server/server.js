@@ -35,9 +35,9 @@ app.get('/test',async (req,res)=>{
 
 console.log("Evaluating env,",process.env.NODE_ENV);
 if (process.env.NODE_ENV == `production`) {
-    console.log("Using static build...");
-    app.use(express.static(path.resolve(__dirname, '../dist')));
-    app.use(express.static(path.resolve(__dirname, 'index.html')));
+    console.log("Using static build...",__dirname);
+    app.use(express.static(path.resolve(__dirname,'../../dist')));
+    app.use(express.static(path.resolve(__dirname,'../..')));
 }
 
 app.post('/authenticate',async (req,res)=>{

@@ -10,7 +10,7 @@
     "server": "cross-env NODE_ENV=development babel-node src/server",
     "server-dev": "nodemon src/server --exec babel-node src/server",
     "start-dev": "concurrently \"npm run server-dev\" \"npm run dev\"",
-    "start": "cross-env NODE_ENV=production npm build && babel-node src/server"
+    "start": "npm build && cross-env NODE_ENV=production babel-node src/server"
   },
   "keywords": [],
   "author": "",

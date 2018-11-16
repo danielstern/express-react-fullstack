@@ -9,26 +9,15 @@ export default {
         publicPath: '/',
     },
     resolve: {
-        extensions: ['.js','.jsx', '.less']
+        extensions: ['.js','.jsx']
     },
     devServer: {
-        historyApiFallback: true,
+        historyApiFallback: true
     },
     module: {
         rules: [{
             test: /\.jsx?/,
             loader:'babel-loader'
-        },
-        {
-            test: /\.(c|le)ss$/,
-            use: [{
-                loader: 'style-loader'
-            }, {
-                loader: 'css-loader'
-            }, {
-                loader: 'less-loader'
-            }
-        ]
         }]
     }
 }
