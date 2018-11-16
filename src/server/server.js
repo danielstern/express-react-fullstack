@@ -30,7 +30,11 @@ app.get('/test',async (req,res)=>{
 
 if (process.env.NODE_ENV == `production`) {
     app.use(express.static(path.resolve(__dirname,'../../dist')));
-    app.use('*',express.static(path.resolve(__dirname,'../../index.html')));
+    app.get('/*',(req,res)=>{
+        res.sendFile(path.resolve('index.html'));
+    });
+    // app.get('/*',express.static(path.resolve(__dirname,'../../index.html')));
+    // app.use('*',express.static(path.resolve(__dirname,'../../index.html')));
 }
 
 app.post('/authenticate',async (req,res)=>{
