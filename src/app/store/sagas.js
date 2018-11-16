@@ -16,7 +16,7 @@ console.log("Environment?",process.env.NODE_ENV);
 //     url =  `http://localhost:7777`;
 // }
 
-let url = ``;
+let url = process.env.NODE_ENV === 'production' ? `` : `http://localhost:7777`;
 
 export function* taskCreationSaga(){
     while (true){
