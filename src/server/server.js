@@ -20,8 +20,6 @@ import { assembleUserState } from './utility';
 let port = process.env.PORT || 7777;
 let app = express();
 
-console.log("Port?",port);
-
 const authorizationTokens = [];
 
 app.use(
