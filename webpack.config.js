@@ -1,6 +1,8 @@
-import path from 'path';
+// import path from 'path';
 
-export default {
+const path = require("path");
+// export default {
+module.exports = {
     mode: 'development',
     entry: path.resolve(__dirname, 'src','app'),
     output: {
