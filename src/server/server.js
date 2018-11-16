@@ -1,10 +1,5 @@
 import { MongoClient } from 'mongodb';
 import path from 'path';
-// todo... get PROD url
-console.log("PRod or dev?",process.env.NODE_ENV);
-// const url = `mongodb://localhost:27017/organizer`;
-
-
 
 import express from 'express';
 import cors from 'cors';
@@ -33,11 +28,9 @@ app.get('/test',async (req,res)=>{
     res.send("42 hello!");
 });
 
-console.log("Evaluating env,",process.env.NODE_ENV);
 if (process.env.NODE_ENV == `production`) {
-    console.log("Using static build...",__dirname);
     app.use(express.static(path.resolve(__dirname,'../../dist')));
-    app.use(express.static(path.resolve(__dirname,'../..')));
+    app.use('*',express.static(path.resolve(__dirname,'../../index.html')));
 }
 
 app.post('/authenticate',async (req,res)=>{
@@ -80,7 +73,6 @@ app.post('/task/update',async (req,res)=>{
     let db = await connectDB();
     let {id,group,isComplete,name} = req.body.task;
     let collection = db.collection(`tasks`);
-    console.log(req.body.task);
     if (group) {
         await collection.updateOne({id},{$set:{group}});
     }
