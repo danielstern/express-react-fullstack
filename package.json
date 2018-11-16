@@ -4,12 +4,13 @@
   "description": "",
   "main": "index.js",
   "scripts": {
-    "build": "webpack",
+    "build": "npm install --save-dev webpack-command && webpack",
+    "postinstall":"npm build",
     "dev": "webpack-dev-server --open",
     "server": "cross-env NODE_ENV=development babel-node src/server",
     "server-dev": "nodemon src/server --exec babel-node src/server",
     "start-dev": "concurrently \"npm run server-dev\" \"npm run dev\"",
-    "start": "npm run build && cross-env NODE_ENV=production babel-node src/server"
+    "start": "cross-env NODE_ENV=production babel-node src/server"
   },
   "keywords": [],
   "author": "",
