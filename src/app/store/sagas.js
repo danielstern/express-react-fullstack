@@ -7,12 +7,16 @@ import axios from 'axios';
 
 import * as mutations from './mutations';
 // TODO... update with production url
-let url;
-if (process.env.NODE_ENV === 'production') {
-    url = ``
-} else {
-    url =  `http://localhost:7777`;
-}
+console.log("Environment?",process.env.NODE_ENV);
+// let url = `http:/`
+// let url;
+// if (process.env.NODE_ENV === 'production') {
+//     url = ``
+// } else {
+//     url =  `http://localhost:7777`;
+// }
+
+let url = ``;
 
 export function* taskCreationSaga(){
     while (true){
