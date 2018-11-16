@@ -7,6 +7,7 @@ let db = null;
 export async function connectDB(){
     if (db) return db;
     let client = await MongoClient.connect(url);
-    db = client.db('organizer');
+    // db = client.db('organizer');
+    db = client.db();
     return db;
 }
