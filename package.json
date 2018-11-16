@@ -4,7 +4,7 @@
   "description": "A full stack application with React and MongoDB (Easily deployed)",
   "main": "index.js",
   "scripts": {
-    "build": "webpack",
+    "build": "webpack -p",
     "deploy":"git commit -a -m deployment && git push heroku master",
     "dev": "webpack-dev-server --open",
     "postinstall":"npm install --save-dev webpack-cli",
