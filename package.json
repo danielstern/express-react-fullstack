@@ -6,7 +6,7 @@
   "scripts": {
     "build": "npm install -g webpack webpack-cli && webpack",
     "dev": "webpack-dev-server --open",
-    "server": "cross-env NODE_ENV=development babel-node src/server",
+    "server": "NODE_ENV=development babel-node src/server",
     "server-dev": "nodemon src/server --exec babel-node src/server",
     "start-dev": "concurrently \"npm run server-dev\" \"npm run dev\"",
     "start": "npm run build && cross-env NODE_ENV=production babel-node src/server"
