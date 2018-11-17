@@ -1,10 +1,13 @@
+/**
+ * The task detail component route is a more sophisticated form that has many different fields.
+ * The component automatically calls the REST API [via a mutation] to update the server on every change.
+ */
 import React from 'react';
 import uuid from 'uuid';
 import { connect } from 'react-redux';
 import { Link } from 'react-router-dom';
-import { ConnectedUsernameDisplay } from './UsernameDisplay'
-import { routeGuard } from './Dashboard'
 
+import { ConnectedUsernameDisplay } from './UsernameDisplay'
 import {
     setTaskCompletion,
     addTaskComment,

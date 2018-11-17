@@ -1,3 +1,7 @@
+/**
+ * The login route component contains a simple form that checks authentication data via the server.
+ */
+
 import React from 'react';
 import * as mutations from '../store/mutations';
 import { connect } from 'react-redux';
