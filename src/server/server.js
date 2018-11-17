@@ -5,17 +5,16 @@ import express from 'express';
 import cors from 'cors';
 import bodyParser from 'body-parser';
 
-import uuid from 'uuid';
-import md5 from 'md5';
 import './initialize-db';
+import { authenticationRoute } from './authenticate'
 
 import { connectDB } from './connect-db'
-import { assembleUserState } from './utility';
+
 
 let port = process.env.PORT || 7777;
 let app = express();
 
-const authorizationTokens = [];
+
 
 app.use(
     cors(),
@@ -24,46 +23,15 @@ app.use(
 );
 app.listen(port,console.info("Server running, listening on port ", port));
 
-app.get('/test',async (req,res)=>{
-    res.send("42 hello!");
-});
+authenticationRoute(app);
 
 if (process.env.NODE_ENV == `production`) {
     app.use(express.static(path.resolve(__dirname,'../../dist')));
     app.get('/*',(req,res)=>{
         res.sendFile(path.resolve('index.html'));
     });
-    // app.get('/*',express.static(path.resolve(__dirname,'../../index.html')));
-    // app.use('*',express.static(path.resolve(__dirname,'../../index.html')));
 }
 
-app.post('/authenticate',async (req,res)=>{
-    let { username, password } = req.body;
-    let db = await connectDB();
-    let collection = db.collection(`users`);
-
-    let user = await collection.findOne({name:username});
-    if (!user) {
-        return res.status(500).send(`User not found`);
-    }
-
-    let hash = md5(password);
-    let passwordCorrect = hash === user.passwordHash;
-    if (!passwordCorrect) {
-        return res.status(500).send('Password incorrect');
-    }
-
-    let token = uuid();
-
-    authorizationTokens.push({
-        token,
-        userID: user.id
-    });
-
-    let state = await assembleUserState(user);
-
-    res.send({token,state});
-});
 
 app.post('/task/new',async (req,res)=>{
     let task = req.body.task;

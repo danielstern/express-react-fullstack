@@ -53,7 +53,7 @@ export const reducer = combineReducers({
                 return action.state.tasks;
             case mutations.SET_TASK_COMPLETE:
                 return tasks.map(task=>{
-                    return (task.id === action.id) ? {...task,isComplete:action.isComplete} : task;
+                    return (task.id === action.taskID) ? {...task,isComplete:action.isComplete} : task;
                 });
             case mutations.SET_TASK_GROUP:
                 return tasks.map(task=>{

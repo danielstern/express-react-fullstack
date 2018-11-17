@@ -13,7 +13,7 @@ export const SET_STATE = `SET_STATE`;
 
 export const setTaskCompletion = (id, isComplete = true)=>({
     type:SET_TASK_COMPLETE,
-    id,
+    taskID:id,
     isComplete
 });
 

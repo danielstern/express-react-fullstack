@@ -4,18 +4,7 @@ import uuid from 'uuid';
 import { history } from './history'
 import axios from 'axios';
 
-
 import * as mutations from './mutations';
-// TODO... update with production url
-console.log("Environment?",process.env.NODE_ENV);
-// let url = `http:/`
-// let url;
-// if (process.env.NODE_ENV === 'production') {
-//     url = ``
-// } else {
-//     url =  `http://localhost:7777`;
-// }
-
 let url = process.env.NODE_ENV === 'production' ? `` : `http://localhost:7777`;
 
 export function* taskCreationSaga(){
