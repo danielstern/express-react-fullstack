@@ -5,6 +5,7 @@ import { ConnectedTaskDetail } from './TaskDetail'
 import { ConnectedDashboard } from './Dashboard'
 import { ConnectedNavigation } from './Navigation'
 import { ConnectedLogin } from './Login'
+import { ConnectedSignup } from './Signup'
 import { store } from '../store';
 import { history } from '../store/history';
 import { Redirect } from 'react-router';
@@ -20,6 +21,7 @@ export const Main = ()=>(
             <div className="container mt-3">
                 <ConnectedNavigation/>
                 <Route exact path="/" component={ConnectedLogin} />
+                <Route exact path="/signup" component={ConnectedSignup}/>
                 <Route exact
                        path="/dashboard"
                        render={RouteGuard(ConnectedDashboard)}/>

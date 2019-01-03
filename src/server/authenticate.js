@@ -34,4 +34,35 @@ export const authenticationRoute = app => {
 
         res.send({token,state});
     });
+
+    app.post('/user/create',async(req,res)=>{
+        let {username,password} = req.body;
+        console.log(username,password);
+        let db = await connectDB();
+        let collection = db.collection(`users`);
+        let user = await collection.findOne({name:username});
+        if (user) {
+            res.status(500).send({message:"A user with that account name already exists."});
+            return;
+        };
+
+        let userID = uuid();
+        let groupID = uuid();
+
+        await collection.insertOne({
+            name:username,
+            id:userID,
+            passwordHash:md5(password)
+        });
+
+        await db.collection(`groups`).insertOne({
+            id:groupID,
+            owner:userID,
+            name: `To Do`
+        });
+
+        let state = await assembleUserState({id:userID,name:username});
+
+        res.status(200).send({userID,state});
+    });
 };
