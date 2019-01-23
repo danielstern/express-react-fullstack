@@ -5,14 +5,14 @@
   "main": "index.js",
   "scripts": {
     "build": "webpack -p",
-    "deploy": "git commit -a -m deployment && git push heroku master",
+    "deploy": "npm run build && git commit -a -m deployment && git push heroku master",
     "dev": "webpack-dev-server --open",
     "postinstall": "npm install --save-dev webpack-cli",
     "server": "cross-env NODE_ENV=production babel-node src/server",
     "server-dev": "nodemon src/server --exec babel-node src/server",
     "start-dev": "concurrently \"npm run server-dev\" \"npm run dev\"",
     "server-spec": "babel-node src/server/server.spec",
-    "start": "npm run build && npm run server"
+    "start": "npm run server"
   },
   "keywords": [
     "react",
@@ -59,8 +59,7 @@
     "mongodb": "^3.1.10",
     "nodemon": "^1.18.4",
     "style-loader": "^0.23.0",
-    "webpack-cli": "^3.1.2",
-    "webpack-command": "^0.4.2",
+    "webpack-cli": "^3.2.1",
     "webpack-dev-server": "^3.1.7"
   }
 }

@@ -1,4 +1,4 @@
 node_modules
 .idea
-dist/bundle.js
+#dist/bundle.js
 .log
