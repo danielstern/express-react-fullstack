@@ -55,4 +55,11 @@ Try:
 
 ## Challenge Task Solutions
 
-Coming January 2019
+### Connected Username Component
+1. Create a [https://github.com/danielstern/express-react-fullstack/blob/master/src/app/components/UsernameDisplay.jsx]  (connected username component) which matches user data with an ID provided as a prop.
+2. Update the server-side state assembly process to include the usernames (but not passwords or any sensitive data) of any users which will be relevant to the current session.
+
+### Sign Up 
+This version of the application is found at the [https://github.com/danielstern/express-react-fullstack/tree/add-signup/src/app/components] (Add Sign Up Branch)
+
+1.
