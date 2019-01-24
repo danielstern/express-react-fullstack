@@ -7,7 +7,6 @@
     "build": "webpack -p",
     "deploy": "npm run build && git commit -a -m deployment && git push heroku master",
     "dev": "webpack-dev-server --open",
-    "postinstall": "npm install --save-dev webpack-cli",
     "server": "cross-env NODE_ENV=production babel-node src/server",
     "server-dev": "nodemon src/server --exec babel-node src/server",
     "start-dev": "concurrently \"npm run server-dev\" \"npm run dev\"",
