@@ -66,3 +66,6 @@ This version of the application is found at the [Add Sign Up Branch](https://git
 2. Create a Sign Up route, which is almost identical to the Login route.
 3. Add a saga to communicate requests from the Login Route to the server.
 4. Add a route to the server which creates new users in the database.
+
+### Security
+Coming February 2019.
