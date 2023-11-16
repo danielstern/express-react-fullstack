@@ -1,0 +1,50 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: my-app
+spec:
+  replicas: 3
+  selector:
+    matchLabels:
+      app: my-app
+  template:
+    metadata:
+      labels:
+        app: my-app
+    spec:
+      containers:
+      - name: my-app
+        image: check
+        imagePullPolicy: Never
+        ports:
+        - containerPort: 7777
+        env:
+        - name: MONGODB_URI
+          value: mongodb://db:27017/organizer
+---
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: db
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      app: db
+  template:
+    metadata:
+      labels:
+        app: db
+    spec:
+      containers:
+      - name: db
+        image: mongo
+        ports:
+        - containerPort: 27017
+        volumeMounts:
+        - mountPath: /data/db
+          name: mydata
+      volumes:
+      - name: mydata
+        emptyDir: {}
+
