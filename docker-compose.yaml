@@ -1,0 +1,18 @@
+services:
+      webapp:
+        build:
+          context: .
+        environment:
+           - MONGODB_URI=mongodb://db:27017/organizer
+        ports:
+           - 7777:7777
+        links:
+           - db
+      db:
+       image: mongo
+       ports:
+          - 27017:27017
+       volumes:
+          - mydata:/data/db
+volumes:
+   mydata:
